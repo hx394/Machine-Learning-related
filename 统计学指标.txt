@@ -1,0 +1,150 @@
+
+
+
+准确率(accuracy),其定义是: 对于给定的测试数据集，分类器正确分类的样本数与总样本数之比。
+accuracy = correct_counter/num_test
+accuracy=(TP+TN)/(TP+FP+TN+FN)
+
+精确率(precision)的公式是P = TP/(TP+FP),它计算的是所有"正确被检索的item(TP)"占所有"实际被检索到的(TP+FP)"的比例.
+
+TP(true positives)：被机器检索到且事实上真的相关。
+FP(false positive)：被机器检索到且事实上真的无关。
+TN(true negative)：未被机器检索到且事实上真的无关。
+FN(false negative)：未被机器检索到且事实上真的相关。
+
+召回率(recall)的公式是R = TP/(TP+FN),它计算的是所有"正确被检索的item(TP)"占所有"应该检索到的item(TP+FN)"的比例。
+
+F1值就是精确值和召回率的调和均值,也就是 2/F_1 = 1/P + 1/R 
+调整下也就是 F_1 = 2PR/(P+R)= 2TP/(2TP + FP + FN) 
+
+需要说明的是,有人列了这样个公式
+F_a = (a^2 + 1 )PR/((a^2 * P) + R )
+将F-measure一般化.
+
+F1-measure认为精确率和召回率的权重是一样的,但有些场景下,我们可能认为精确率会更加重要,调整参数a,使用Fa-measure可以帮助我们更好的evaluate结果.
+
+F measure也叫F-score，它的值 只有在Precision 和 Recall 都大的时候 才会大。
+
+
+预测模型无非就是两个结果
+
+准确预测(不管是正样子预测为正样本,还是负样本预测为负样本)
+错误预测
+
+那我就可以直接求预测准确率,用这个值来评估模型准确率不就行了
+
+那为什么还要那么复杂算各种值.理由是一般而言:负样本远大于正样本。
+
+可以想象,两个模型的TN变化不大的情况下,但是TP在两个模型上有不同的值,TN>>TP是不是可以推断出:两个模型的(TN+TP)近似相等.这不就意味着两个模型按照以上公式计算的Accuracy近似相等了.那用这个指标有什么用!!!
+
+所以说,对于这种情况的二分类问题,一般使用Fscore去评估模型.
+
+需要注意的是:Fscore只用来评估二分类的模型,Accuracy没有这限制
+
+
+
+Z-score（standard score）
+
+标准分数也叫z分数，是一种具有相等单位的量数。它是将原始分数与团体的平均数之差除以标准差所得的商数，是以标准差为单位度量原始分数离开其平均数的分数之上多少个标准差，或是在平均数之下多少个标准差。它是一个抽象值，不受原始测量单位的影响，并可接受进一步的统计处理。
+
+用公式表示为：z=(x-μ)/σ;其中z为标准分数；x为某一具体分数，μ为平均数，σ为标准差。
+Z值的量代表着原始分数和母体平均值之间的距离，是以标准差为单位计算。在原始分数低于平均值时Z则为负数，反之则为正数。
+
+
+What Is R-Squared?
+R-squared (R2) is a statistical measure that represents the proportion of the variance for a dependent variable that's explained by an independent variable or variables in a regression model. R-Squared is also known as coefficient of determination. Whereas correlation explains the strength of the relationship between an independent and dependent variable, R-squared explains to what extent the variance of one variable explains the variance of the second variable. So, if the R2 of a model is 0.50, then approximately half of the observed variation can be explained by the model's inputs.
+
+
+KEY TAKEAWAYS
+R-Squared is a statistical measure of fit that indicates how much variation of a dependent variable is explained by the independent variable(s) in a regression model.
+In investing, R-squared is generally interpreted as the percentage of a fund or security's movements that can be explained by movements in a benchmark index.
+An R-squared of 100% means that all movements of a security (or other dependent variables) are completely explained by movements in the index (or the independent variable(s) you are interested in).
+
+
+Formula for R-Squared
+R squared=1-(unexplained variation/total variation)
+=explanable_variation_by_regression_model/total_variation
+
+R squared is possible to be negative,when the model have variance more than the variance around the mean line. It need not actually be the square of the quantity R(correlation).
+
+The actual calculation of R-squared requires several steps. This includes taking the data points (observations) of dependent and independent variables and finding the line of best fit, often from a regression model. From there you would calculate predicted values, subtract actual values and square the results. This yields a list of errors squared, which is then summed and equals the unexplained variance.
+
+To calculate the total variance, you would subtract the average actual value from each of the actual values, square the results and sum them. From there, divide the first sum of errors (explained variance) by the second sum (total variance), subtract the result from one, and you have the R-squared. 
+
+Limitations of R-Squared —
+1. R-Squared tells us how much percentage of variation in y can be explained by the linear model between X and y but it does not tell how much percentage of entire y can be explained by the linear model.
+2. Since variance is dataset dependent, R² may not be meaningfully comparable across different datasets.
+3. It does not give any indication about the direction of the relationship.
+
+R-Squared vs. Adjusted R-Squared
+
+R square adjusted= 1 - (1-R^2)(n-1)/(n-p-1)
+
+n是样本数量，p是特征数量。该公式抵消了样本数量的影响。
+
+R-Squared only works as intended in a simple linear regression model with one explanatory variable. With a multiple regression made up of several independent variables, the R-Squared must be adjusted.
+
+可能有同学会担心，特征变量数量多起来了，是不是计算更加复杂了？因为计算不涉及任何单个特征变量，仍然只用到预测和真实结果y计算R squared，再进一步就得到adjusted的值。所以不用想太多，直接套用公式计算R square adjusted即可。
+
+The adjusted R-squared compares the descriptive power of regression models that include diverse numbers of predictors. Every predictor added to a model increases R-squared and never decreases it. Thus, a model with more terms may seem to have a better fit just for the fact that it has more terms, while the adjusted R-squared compensates for the addition of variables and only increases if the new term enhances the model above what would be obtained by probability and decreases when a predictor enhances the model less than what is predicted by chance.
+
+In an overfitting condition, an incorrectly high value of R-squared is obtained, even when the model actually has a decreased ability to predict. This is not the case with the adjusted R-squared.
+
+
+R-Squared vs. Beta
+Beta and R-squared are two related, but different, measures of correlation but the beta is a measure of relative riskiness. A mutual fund with a high R-squared correlates highly with a benchmark. If the beta is also high, it may produce higher returns than the benchmark, particularly in bull markets. R-squared measures how closely each change in the price of an asset is correlated to a benchmark.
+
+Beta measures how large those price changes are relative to a benchmark. Used together, R-squared and beta give investors a thorough picture of the performance of asset managers. A beta of exactly 1.0 means that the risk (volatility) of the asset is identical to that of its benchmark. Essentially, R-squared is a statistical analysis technique for the practical use and trustworthiness of betas of securities.
+
+Limitations of R-Squared
+R-squared will give you an estimate of the relationship between movements of a dependent variable based on an independent variable's movements. It doesn't tell you whether your chosen model is good or bad, nor will it tell you whether the data and predictions are biased. A high or low R-square isn't necessarily good or bad, as it doesn't convey the reliability of the model, nor whether you've chosen the right regression. You can get a low R-squared for a good model, or a high R-square for a poorly fitted model, and vice versa.
+
+
+Covariance
+This explains how much X varies from its mean when Y varies from its own mean. It is a statistical measure used to analyze how two random variables behave as a pair. 表征两个变量间的线性关系的正负方向。
+
+limitations of COV
+1. covariance value is sensitive to the scale of the data and this makes it difficult to interpret.
+2. It tells us that the slope is negative or positive. It does not answer the question — Are data points relatively close or far to the fitted line?
+
+
+
+
+SD(standard deviation)
+
+Correlation(COR),即相关系数是将协方差标准化（normalized covariance）之后的结果，计算公式如下：
+COR(x,y)=Cov(x,y)/SD(x) * SD(y)
+范围-1到1。表征两个变量间的线性关系的强弱。
+
+ Just because we have huge data, we will have pretty strong confidence in prediction, but if the correlation value is small, our predictions will still be very inaccurate.
+
+But keep in mind, even if two variables have strong linear relationship, COR is not able to prove a causal relationship. We are not saying that low or high values for one random variable causes another random variable to have low or high values. In other words, we can say that we do not rule out the possibility that something else can cause the trend that we observe. This further means that two completely unrelated factors that may have mathematical correlation but have no sensible relationship in real life.
+
+If R squared >0, then R squared=(COR(x,y))^2=(cov(x,y))^2/(var(x)var(y))
+
+Summary
+1.Covariance value has no upper or lower limit and is sensitive to the scale of the variables. While correlation value is always between -1 and 1 and is insensitive to the scale of the variables.
+
+2.Correlation value tells about the strength as well as direction of the relationship. But correlation strength does not necessarily mean the correlation is statistically significant; will depend on sample size and p-value.
+
+3.The R-Squared can take any value in the range [-∞, 1]. The close the value to 1 the better the explanatory power of the independent variable is. It helps explain the variability in data.
+
+
+p value
+ 一种概率，一种在原假设为真的前提下出现观察样本以及更极端情况的概率。
+
+P值的计算：
+一般地，用X 表示检验的统计量，当H0为真时，可由样本数据计算出该统计量的值C，根据检验统计量X的具体分布，可求出P值。具体地说：
+左侧检验的P值为检验统计量X 小于样本统计值C 的概率，即：P = P{ X < C}
+右侧检验的P值为检验统计量X 大于样本统计值C 的概率：P = P{ X > C}
+双侧检验的P值为检验统计量X 落在样本统计值C 为端点的尾部区域内的概率的2 倍：P = 2P{ X > C} (当C位于分布曲线的右端时) 或P = 2P{ X< C} (当C 位于分布曲线的左端时) 。若X 服从正态分布和t分布，其分布曲线是关于纵轴对称的，故其P 值可表示为P = P{| X| > C} 。
+计算出P值后，将给定的显著性水平α与P 值比较，就可作出检验的结论：
+如果α > P值，则在显著性水平α下拒绝原假设。
+如果α ≤ P值，则在显著性水平α下不拒绝原假设。
+在实践中，当α = P值时，也即统计量的值C刚好等于临界值，为慎重起见，可增加样本容量，重新进行抽样检验。
+
+
+使用统计学需要注意的：
+1.统计模型不能是不能说明因果关系的，因果关系需要通过其他学科来解释
+2.回归分析不能直接证明因果关系，而只能说明因果关系的显著性
+

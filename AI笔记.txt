@@ -1,0 +1,310 @@
+找AI相关工作，去
+南京经济技术开发区。
+高新开发区成立了智谷AI Valley。
+
+诚迈
+统信
+
+搞清楚base,bayes,bias几个词的日文区别。
+ベース。 ベイズ。 バイアス
+
+RNN- 
+Recursive NN(binary tree,space dimention development; for example,one sentence divides into several grammar parts, each divides into smaller parts)
+
+Recurrent NN(result before become new input,history affects future,time dimension development)
+
+LSTM long short term memory(special RNN,sequencial processing,the long term information  can have effect on future result-long term dependencies,in simple RNN Large sentences makes the gradient vanishes & explodes)
+3gates: forget gate, input gate, output gate. 1 memory unit: cell. cell state transfers information to next cycle
+
+
+GRU Gate Recurrent Unit (improved LSTM, sequencial processing, forget gate and input gate combine into update gate,use reset gate rather than output gate, saves huge amount of computation)
+
+
+GNN graph NN(the computer science term "graph",some nodes are constantly not changed,the input do not have to be Euclidean space data)
+Euclidean space data: the dimension of input is stable,local input data must be ordered
+non-Euclidean space data:local input dimention can change, local input arrangement is not ordered
+
+
+Transformers (a type of GNN, seq2seq algorithm,not sequencial processing, but parallel processing, some parts of input data can have more weights than others, the history far away can have significant influence on future which is called long term dependencies.Applied to images or NLP.uses self-attention mechanism)
+structure of Transformers
+encoder1->encoder2->encoder3->encoder4->encoder5->encoder6
+                                                     |
+                                                     |
+    |--------|---------|---------|---------|---------|
+    V        V         V         V         V         V
+decoder1->decoder2->decoder3->decoder4->decoder5->decoder6
+
+encoder structure=self attention mechanism+feed forward（前馈神经网络）
+然后再transformer中使用了6个encoder，为了解决梯度消失的问题，在Encoders和Decoder中都是用了残差神经网络的结构，即每一个前馈神经网络的输入不光包含上述self-attention的输出Z，还包含最原始的输入。
+上述说到的encoder是对输入（“机器学习”四个字）进行编码，使用的是自注意力机制+前馈神经网络的结构，同样的，在decoder中使用的也是同样的结构。也是首先对输出（“machine learning”该词组）计算自注意力得分，不同的地方在于，进行过自注意力机制后，将self-attention的输出再与encoders模块的输出计算一遍注意力机制得分，之后，再进入前馈神经网络模块。
+
+attention mechanism 注意力机制
+some parts are more important(bigger weights).the calculation of weights needs the participation of both source and target
+
+self-attention mechanism 自注意力机制
+the calculation of weights is inside the source itself, or the target itself
+
+CNN convolutional NN(mainly used on image,5 layers:
+input layer（规范输入信息）->
+convolutional layer（卷积层，常见范例比如你有一个5x5大矩阵，在里面用滑动窗口计算每个2x2小块的数字之和，并将这些和提取出来）->
+activation layer（激活函数发挥作用）->
+pooling layer（减少无用信息）->
+connection layer（连接层和普通的神经网络基本相同）)
+
+
+sparse modeling vs deep learning
+稀疏建模实例：图像去噪、修复与去马赛克；物体识别；笼统监督学习；为大规模半监督学习建立计算机意义上的“graph”
+sparse modeling:
+little amount of training data, explanable ai(variable selection), minimum computation resources.prevents overfitting.avoid regularization error.
+
+variable selection: If we define a model as sparse, it means that some dependent variables represented by 0 are not used to predict. So we can analyze the performance of model from selected variable. That is called model interpretability.
+
+regularization(规范化; 正则; 规则化调整; 正则化; 规则化): regularization term evaluates sparseness of coefficients(or dictionary). If this value is small, we can say that the model is more sparse and explainable. 
+Regularization error is the error caused by lack or wrong way of regularization(error=desired output-predicted output). 
+
+监督机器学习问题无非就是“minimize your error while regularizing your parameters”，也就是在规则化cost function参数的同时最小化cost function得到的误差。最小化误差是为了让我们的模型拟合我们的训练数据，而规则化参数是防止我们的模型过分拟合我们的训练数据。多么简约的哲学啊！因为参数太多，会导致我们的模型复杂度上升，容易过拟合，也就是我们的训练误差会很小。但训练误差小并不是我们的最终目标，我们的目标是希望模型的测试误差小，也就是能准确的预测新的样本。所以，我们需要保证模型“简单”的基础上最小化训练误差，这样得到的参数才具有好的泛化性能（也就是测试误差也小），而模型“简单”就是通过规则函数来实现的。
+
+
+
+半监督学习：
+半监督学习有两个样本集,一个有标记,一个没有标记.分别记作
+
+Lable={(xi,yi)},Unlabled={(xi)}.并且数量上,L<<U.
+
+1.      单独使用有标记样本,我们能够生成有监督分类算法
+
+2.      单独使用无标记样本,我们能够生成无监督聚类算法
+
+3.      两者都使用,我们希望在1中加入无标记样本,增强有监督分类的效果;同样的,我们希望在2中加入有标记样本,增强无监督聚类的效果.
+
+一般而言,半监督学习侧重于在有监督的分类算法中加入无标记样本来实现半监督分类.也就是在1中加入无标记样本,增强分类效果.
+
+normalization, standardization和regularization:
+
+1.normalization和standardization是差不多的，都是把数据进行前处理，从而使数值都落入到统一的数值范围，从而在建模过程中，各个特征量没差别对待。normalization一般是把数据限定在需要的范围，比如一般都是【0，1】，从而消除了数据量纲对建模的影响。standardization 一般是指将数据正态化，使平均值0方差为1. 因此normalization和standardization 是针对数据而言的，消除一些数值差异带来的特种重要性偏见。经过归一化的数据，能加快训练速度，促进算法的收敛。
+
+2.而regularization是在cost function里面加惩罚项，增加建模的模糊性，从而把捕捉到的趋势从局部细微趋势，调整到整体大概趋势。虽然一定程度上的放宽了建模要求，但是能有效防止over-fitting的问题，增加模型准确性。因此，regularization是针对模型而言。
+
+更多算法：
+    
+similarity measurement algorithm,相似性度量算法（一个例子是k近邻算法，即是给定一个训练数据集，对新的输入实例，在训练数据集中找到与该实例最邻近的K个实例，这K个实例的多数属于某个类，就把该输入实例分类到这个类中。）
+
+diffusion model
+主要用于成像。很好想象，将一盆水倒在物理模型上会在高势差的地方形成更坚实的边界。
+
+dimension diminishing algorithm,降维算法（将向量投影到低维空间，以达到可视化、分类等目的。应用场景：数据特征过多，需要特征选择；或者ML模型过度拟合数据。）
+
+clustering algorithm,聚类算法（无监督学习，没有目标变量。类似统计学中的几团聚集在一起的点分别分类。k-means聚类、层次聚类。）
+
+explainable AI algorithms, 可解释ai算法（解释机器学习模型为什么得出某个结果。传统上，有线性回归（一次单变量或一次多变量）、逻辑回归（用到log函数的广义线性回归）、多项式回归（用到多项式函数，多元多次变量的广义线性回归）；此外，可解释模型还包括SHAP和LIME这两种流行技术，它们被用来解释机器学习模型。）
+
+ensemble learning algorithm (boosting or bagging),集成学习（使用多个算法分别计算，再统合。分为两大类，boosting和bagging。boosting是通过串联的不同算法的学习机器，调整输入数据的特征权重。bagging是先用不同算法平行计算，再将所有结果导入最终计算的学习机器。）。
+
+k均值聚类算法（k-means clustering algorithm）是一种迭代求解的聚类分析算法，其步骤是，预将数据分为K组，则随机选取K个对象作为初始的聚类中心，然后计算每个对象与各个种子聚类中心之间的距离，把每个对象分配给距离它最近的聚类中心。聚类中心以及分配给它们的对象就代表一个聚类。每分配一个样本，聚类的聚类中心会根据聚类中现有的对象被重新计算。这个过程将不断重复直到满足某个终止条件。终止条件可以是没有（或最小数目）对象被重新分配给不同的聚类，没有（或最小数目）聚类中心再发生变化，误差平方和局部最小。
+
+层次聚类Hierarchical Clustering是树形的聚类算法。一般叶子们为初始的点，从根向下的树为包括一切点的簇。常见的例子是计算每两个点之间的距离，重复将距离最短的两个点或簇作为子节点被父节点连接从而形成更高层次的簇。
+
+Explanable AI(简写XAI)
+
+LIME
+它是 Local Interpretable Model Agnostic Explanation的缩写。 局部（Local ）意味着它可以用于解释机器学习模型的个别预测。
+要使用它也非常的简单，只需要2个步骤：(1) 导入模块，(2) 使用训练值、特征和目标拟合解释器。
+动机：在全局中独立变量对结果的影响可能非常复杂，难以直观得到关系
+如果专注于一个局部，可以把他们的关系近似为线性模型
+提出 Local Interpretable Model-Agnostic Explanations，在一组可解释的表示上确定一个可解释的模型，使这个模型在局部与分类器一致
+
+SHAP
+它是 SHapley Additive exPlanations的缩写。 该方法旨在通过计算每个特征对预测的贡献来解释实例/观察的预测。
+SHAP is a bit different from LIME. It bases the explanations on shapely values — measures of contributions each feature has in the model.
+The idea is still the same — get insights into how the machine learning model works.
+For getting explanations, SHAP doesn’t look as intuitive as LIME out of the black box. It comes with summary charts that make understanding an entire machine learning model easy.
+
+In general:
+
+Use LIME for single prediction explanation
+
+Use SHAP for entire model (or single variable) explanation
+
+Transfer learning
+迁移学习是一种机器学习方法，就是把为任务 A 开发的模型作为初始点，重新使用在为任务 B 开发模型的过程中。比如多任务学习。
+
+多任务学习（Multitask learning）定义：基于共享表示（shared representation），把多个相关的任务放在一起学习的一种机器学习方法。
+
+多任务学习涉及多个相关的任务同时并行学习，在神经网络中同时反向传播，多个任务通过浅层的共享表示（shared representation）来互相帮助学习，提升泛化效果。简单来说：多任务学习把多个相关的任务放在一起学习（注意，一定要是相关的任务），学习过程中通过一个在浅层的共享表示来互相分享、互相补充学习到的领域相关的信息，互相促进学习，提升泛化的效果。
+
+共享表示shared representation：
+共享表示的目的是为了提高泛化（improving generalization），图2中给出了多任务学习最简单的共享方式，多个任务在浅层共享参数。
+
+shared inputs->shared layers->task-specific layers->multiple tasks' outputs
+
+
+神经网络逆运算: get possible input values from known output with an already trained model. Different solutions from original inputs are possible, so be careful of using this method.
+
+
+Weight Initialization techniques
+1.zero initialization
+In general practice, biases are initialized with 0 and weights are initialized with random numbers, what if weights are initialized with 0?
+Fail to work as a model because weights have no difference in later processing. Don't do it.
+2.random initialization
+Avoid extremely large or small values for weights in activation functions like sigmoid. If not, the slope of gradient changes slowly and learning takes a lot of time. This problem is often referred to as the vanishing gradient.
+3.He initialization (which solves vanishing gradient problem)
+we just simply multiply random initialization with
+(2/size_layer - 1)^(1/2)
+4.use other activation functions such as RELU and leaky RELU
+This solves vanishing gradient problem.
+5.Xavier initialization(for tanh() activation function)
+same as He initialization but use (1/size_layer -1)^(1/2)
+6.some variant form of He
+(2/(2*size_layer -1))^(1/2)
+
+常见激活函数
+1.sigmoid
+sigmoid(x)=1/(1+e^(-x))
+sigmoid 取值范围(0，1)，单调连续，处处可微，一般用于隐藏层和二分类的输出层。
+
+缺点：
+
+左右两侧都是近似饱和区，导数太小，容易造成梯度消失
+涉及指数运算
+not zero-centered：输出值不以零为中心，会导致模型收敛速度慢。对输入x 进行均值为0的归一化，可以有效避免 dw 恒为正或者恒为负的情况。
+
+为了防止饱和，必须对于权重矩阵的初始化特别留意，比如，如果初始化权重过大，那么大多数神经元将会饱和，导致网络就几乎不学习。这是sigmoid用于激活函数的一个缺点。
+
+梯度消失 或者说 饱和区间 的特点，使得随着网络层次增加，Sigmoid函数更容易进入饱和区间，从而梯度消失，权重更新非常困难，或者进入不更新状态，整个网络就几乎不学习。这也是多层次的深度学习网络在隐藏层不用Sigmoid做激活函数的原因。
+
+2.tanh
+tanh(x)=(e^x - e^(-x))/(e^x + e^(-x))
+
+tanh 取值范围(-1，1)，单调连续，处处可微，一般用于隐藏层和二分类的输出层。
+
+相比sigmoid，收敛速度更快，因为在0附近的线性区域内斜率更大，收敛速度会加快。
+相比sigmoid，tanh的输出均值为0，不存在sigmoid中 dw 恒为正或者恒为负的情况。
+相比sigmoid，也存在近似饱和区，而且范围比sigmoid更大。
+
+
+3. relu
+ReLU(x)=0 if x <0
+ReLU(x)=x if x>=0
+
+relu属于非线性激活函数。relu这种“看似线性”（分段线性）的激活函数所形成的网络，能够增加非线性的表达能力。
+
+ReLU 的输出仍然是非零对称的，可能出现 dw 恒为正或者恒为负，从而影响训练速度。
+
+Dead ReLU Problem：当 x<0 时，ReLU 输出恒为零。反向传播时，梯度横为零，参数永远不会更新，也就是形成了“死神经元”。
+
+优点：
+
+计算简单高效，相比sigmoid、tanh没有指数运算
+相比sigmoid、tanh更符合生物学神经激活机制
+在正区间不饱和（Does not saturate），解决梯度消失的问题
+收敛速度较快，大约是 sigmoid、tanh 的 6 倍
+
+缺点：
+
+输出not zero-centered
+Dead ReLU Problem
+
+4. Leaky ReLU
+LeakyReLU(x)=max(0.01x,x)
+优点：
+Does not saturate 不饱和
+计算高效
+和ReLU一样收敛快
+不会出现死神经元的情况
+该函数的输出为负无穷到正无穷，即leaky扩大了Relu函数的范围，其中α的值一般设置为一个较小值，如0.01
+
+缺点：
+理论上来说，该函数具有比Relu函数更好的效果，但是大量的实践证明，其效果不稳定，故实际中该函数的应用并不多。
+由于在不同区间应用的不同的函数所带来的不一致结果，将导致无法为正负输入值提供一致的关系预测。
+
+5. ELU（Exponential Linear Units）
+ELU(x)=x if x>0
+ELU(x)=α(e^x - 1) if x<=0
+
+优点：
+
+ReLU的所有优点
+能够使得神经元的平均激活均值趋近为 0
+对噪声更具有鲁棒性
+缺点：
+
+涉及指数运算
+在实践中同样没有较Relu更突出的效果，故应用不多。
+
+
+6. maxout
+
+在这种方法中，weight矩阵是三维的（d  m  k）。
+d：输入层节点个数
+m：隐层节点个数
+k：maxout对隐层节点做了特殊处理，本来每个隐层节点就是一个神经元就完事了，maxout却让每个隐层节点额外对应了 k 个节点，输出这个 k 个节点的最大值，增加了 k 倍的参数量。因为有max操作，所有maxout是一种非线性变换。
+
+假设只有1个隐层，但是使用maxout， k=5 ，那么输入到隐层的结构如下，相当于把1个节点变成了5个，然后输出这5个节点中的最大值。
+
+优点：
+
+拟合能力非常强
+具有ReLU的所有优点，分段线性、不饱和性
+不存在Dead ReLU Problem
+
+缺点：
+
+参数量翻了 k 倍
+
+总结
+在实际使用中，激活函数的选择可以遵循以下原则：
+首选RELU，注意learning rate
+可以尝试Leaky ReLU、ELU、Maxout
+尽量别用tanh
+别碰sigmoid!!!
+
+
+其他激活函数：
+1.softmax
+假设有两个数，a>b，则a会经常被取到，b也会偶尔被取到。
+softmax=(e^a)/(e^a + e^b)
+
+
+
+神经网络bias中文叫截距项。cost函数中文叫代价函数，描述输出值和真实值的差距。
+α一般是代表learning rate，即用来控制沿着gradient方向变化的速度的可控参数。
+back propagation中文叫反向传播算法。
+
+其他考虑因素：
+necessary attributes like the number of neurones for each layer, 
+the loss array where we will store all the losses while we’re training the model, 
+training rate (it’s recomanded to use 0.1 but you will still need to tune it for more complex models), and the parameters (weights and biaises).
+
+
+activation function
+
+Loss function(error function)
+衡量误差的函数，计算的是一个样本（single example or input）之间的误差，也就是目标函数和真实值之间的差，一个训练集内。
+
+cost function
+衡量的是整个训练集(entire training set)的误差(error)的平均值，cost的存在与否和目标函数的的参数结果没有较大的关系。
+
+error = desired_output - predicted_output
+
+
+
+Perceptron(感知器)是人工神经网络中的一种典型结构， 它的主要的特点是结构简单，对所能解决的问题 存在着收敛算法，并能从数学上严格证明，从而对神经网络研究起了重要的推动作用。
+
+
+感知器，也可翻译为感知机，是Frank Rosenblatt在1957年就职于Cornell航空实验室(Cornell Aeronautical Laboratory)时所发明的一种人工神经网络。它可以被视为一种最简单形式的前馈式人工神经网络，是一种二元线性分类器。 [2] 
+Frank Rosenblatt给出了相应的感知器学习算法，常用的有感知机学习、最小二乘法(Ordinary Least Square)和梯度下降法。譬如，感知机利用梯度下降法对损失函数进行极小化，求出可将训练数据进行线性划分的分离超平面，从而求得感知器模型。
+
+感知器是生物神经细胞的简单抽象，如图1.神经细胞结构大致可分为：树突、突触、细胞体及轴突。单个神经细胞可被视为一种只有两种状态的机器——激动时为‘是’，而未激动时为‘否’。
+神经细胞的状态取决于从其它的神经细胞收到的输入信号量，及突触的强度（抑制或加强）。当信号量总和超过了某个阈值时，细胞体就会激动，产生电脉冲。电脉冲沿着轴突并通过突触传递到其它神经元。为了模拟神经细胞行为，与之对应的感知机基础概念被提出，如权量（突触）、偏置（阈值）及激活函数（细胞体）。
+
+在人工神经网络领域中，感知器也被指为单层的人工神经网络，以区别于较复杂的多层感知器（Multilayer Perceptron）。 作为一种线性分类器，（单层）感知器可说是最简单的前向人工神经网络形式。尽管结构简单，感知器能够学习并解决相当复杂的问题。感知器主要的本质缺陷是它不能处理线性不可分问题。
+
+
+
+前馈神经网络（feedforward neural network，FNN），简称前馈网络，是人工神经网络的一种。前馈神经网络采用一种单向多层结构。其中每一层包含若干个神经元。在此种神经网络中，各神经元可以接收前一层神经元的信号，并产生输出到下一层。第0层叫输入层，最后一层叫输出层，其他中间层叫做隐含层（或隐藏层、隐层）。隐层可以是一层。也可以是多层 [1]  。
+整个网络中无反馈，信号从输入层向输出层单向传播，可用一个有向无环图表示 [2]  。
+
+对于前馈神经网络结构设计，通常采用的方法有3类：直接定型法、修剪法和生长法。
+直接定型法设计一个实际网络对修剪法设定初始网络有很好的指导意义；修剪法由于要求从一个足够大的初始网络开始，注定了修剪过程将是漫长而复杂的，更为不幸的是，BP训练只是最速下降优化过程，它不能保证对于超大初始网络一定能收敛到全局最小或是足够好的局部最小。因此，修剪法并不总是有效的，生长法似乎更符合人的认识事物、积累知识的过程，具有自组织的特点，则生长法可能更有前途，更有发展潜力。
+
+
